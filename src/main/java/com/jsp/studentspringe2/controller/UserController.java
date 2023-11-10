@@ -3,6 +3,7 @@ package com.jsp.studentspringe2.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,37 +15,39 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jsp.studentspringe2.dao.UserDao;
 import com.jsp.studentspringe2.dto.User;
+import com.jsp.studentspringe2.service.UserService;
+import com.jsp.studentspringe2.util.ResponseStructure;
 
 @RestController
 public class UserController {
     @Autowired
-	private UserDao userDao;
+	private UserService service;
 	
 	@PostMapping("/save")
-	public User saveUser(@RequestBody User user) {
-		return userDao.saveUser(user);
+	public ResponseEntity<ResponseStructure<User>> saveUser(@RequestBody User user) {
+		return service.saveUser(user);
 	}
 	@GetMapping("/find")
-	public User findUserById(@RequestParam int userId) {
-		return userDao.findUserById(userId);
+	public ResponseEntity<ResponseStructure<User>> findUserById(@RequestParam int userId) {
+		return service.findUserById(userId);
 	}
-	
+		
 	@DeleteMapping("/delete")
-	public User deleteUserById(@RequestParam int userId) {
-		return userDao.deleteUserById(userId);
-	}
+	public ResponseEntity<ResponseStructure<User>> deleteUserById(@RequestParam int userId) {
+		return service.deleteUserById(userId);
+	}	
 	@GetMapping("/findall")
-	public List<User> findAll(){
-     return userDao.getAllUser();
+	public ResponseEntity<ResponseStructure<List<User>>> findAll(){
+     return service.getAllUser();
 	}
 	
 	@PutMapping("/update")
-	public User updateUser(@RequestParam int userId,@RequestBody User user) {
-		return userDao.updateUser(userId,user);
+	public ResponseEntity<ResponseStructure<User>> updateUser(@RequestParam int userId,@RequestBody User user) {
+		return service.updateUser(userId,user);
 	}
-	
-	
-	
+//	
+//	
+//	
 	
 	
 	
