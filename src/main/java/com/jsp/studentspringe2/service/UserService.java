@@ -68,11 +68,7 @@ public class UserService {
         	 
          }else {
 //        	 id is not present
-        	 ResponseStructure<User> structure=new ResponseStructure<User>();
-        	 structure.setMessage("Sorry Id is not present");
-        	 structure.setHttpStatus(HttpStatus.NOT_FOUND.value());
-        	 structure.setData(null);
-        	 return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.NOT_FOUND);
+        	 throw new UserIdNOtFoundException("Sorry failed to delete User");
                 	 
         	 
          }
@@ -104,16 +100,31 @@ public class UserService {
 			
 		}else {
 //			id is not present
-			ResponseStructure<User> structure=new ResponseStructure<User>();
-			structure.setMessage("Sorry id is not present");
-			structure.setHttpStatus(HttpStatus.NOT_FOUND.value());
-			structure.setData(dbUser);
-			return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.NOT_FOUND);
+			throw new UserIdNOtFoundException("Sorry failed to update User");
 			
 		}
 		
 		
 		
+	}
+
+
+	public ResponseEntity<ResponseStructure<User>> findUserByName(String name) {
+	User dbUser=userDao.findUserByName(name);
+		if(dbUser!=null) {
+//			that user exist
+			ResponseStructure<User> structure=new ResponseStructure<User>();
+			structure.setMessage("User data fetched successfully");
+			structure.setHttpStatus(HttpStatus.FOUND.value());
+			structure.setData(dbUser);
+			return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.FOUND);
+				
+			
+		}else {
+//			userNameNotFoundEXception
+			return null;
+			
+		}
 	}
 	
 	

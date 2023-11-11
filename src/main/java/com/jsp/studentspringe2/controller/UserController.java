@@ -2,6 +2,8 @@ package com.jsp.studentspringe2.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +26,7 @@ public class UserController {
 	private UserService service;
 	
 	@PostMapping("/save")
-	public ResponseEntity<ResponseStructure<User>> saveUser(@RequestBody User user) {
+	public ResponseEntity<ResponseStructure<User>> saveUser(@RequestBody @Valid User user) {
 		return service.saveUser(user);
 	}
 	@GetMapping("/find")
@@ -45,10 +47,11 @@ public class UserController {
 	public ResponseEntity<ResponseStructure<User>> updateUser(@RequestParam int userId,@RequestBody User user) {
 		return service.updateUser(userId,user);
 	}
-//	
-//	
-//	
-	
+
+	@GetMapping("/findbyname")
+	public ResponseEntity<ResponseStructure<User>> getUserByName(@RequestParam String name){
+		return service.findUserByName(name);
+	}
 	
 	
 }

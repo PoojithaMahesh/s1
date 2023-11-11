@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.jsp.studentspringe2.Studentspringe2Application;
 import com.jsp.studentspringe2.dto.User;
 import com.jsp.studentspringe2.repository.UserRepo;
 
@@ -33,6 +34,16 @@ public class UserDao {
 		}
 	}
 
+	public User findUserByName(String name) {
+		Optional<User> optional=repo.findUserByName(name);
+		if(optional.isPresent()) {
+//			user exist with this name
+			return optional.get();
+		}
+		return null;
+	}
+	
+	
 	public User deleteUserById(int userId) {
 
       Optional<User> optional=repo.findById(userId);
